@@ -15,12 +15,6 @@ export const useOutsideClick = (
         return;
       }
 
-      const target = event.target as Element;
-      const isToastClick = target.closest('[role="status"]') !== null;
-      if (isToastClick) {
-        return;
-      }
-
       if (ref.current && !ref.current.contains(event.target)) {
         callback();
       }

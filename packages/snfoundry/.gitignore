@@ -1,4 +1,4 @@
+target
+.snfoundry_cache/
 .env
-contracts/.snfoundry_cache
-contracts/target
-deployments
+local-devnet

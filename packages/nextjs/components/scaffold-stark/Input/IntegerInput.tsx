@@ -2,13 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 import {
   CommonInputProps,
   InputBase,
-  IntegerVariant,
   isValidInteger,
 } from "~~/components/scaffold-stark";
+import { parseEther } from "ethers";
 
 type IntegerInputProps = CommonInputProps<string | bigint> & {
-  variant?: IntegerVariant;
+  variant?: string;
   disableMultiplyBy1e18?: boolean;
+  onError?: (message: string | null) => void;
 };
 
 export const IntegerInput = ({
@@ -17,27 +18,29 @@ export const IntegerInput = ({
   name,
   placeholder,
   disabled,
-  variant = IntegerVariant.UINT256,
+  variant = "core::integer::u256",
   disableMultiplyBy1e18 = false,
+  onError,
 }: IntegerInputProps) => {
   const [inputError, setInputError] = useState(false);
   const multiplyBy1e18 = useCallback(() => {
     if (!value) {
       return;
     }
-    if (typeof value === "bigint") {
-      return onChange(value * 10n ** 18n);
-    }
-    return onChange(BigInt(Math.round(Number(value) * 10 ** 18)));
-  }, [onChange, value]);
+
+    return inputError
+      ? onChange(value)
+      : onChange(parseEther(value.toString()).toString());
+  }, [onChange, value, inputError]);
 
   useEffect(() => {
-    if (isValidInteger(variant, value, false)) {
-      setInputError(false);
-    } else {
-      setInputError(true);
+    const isIntValid = isValidInteger(variant, value);
+    setInputError(!isIntValid);
+    if (onError) {
+      onError(null);
+      if (!isIntValid) onError("Invalid number input");
     }
-  }, [value, variant]);
+  }, [value, variant, onError]);
 
   return (
     <InputBase
@@ -49,9 +52,10 @@ export const IntegerInput = ({
       disabled={disabled}
       suffix={
         !inputError &&
+        !disabled &&
         !disableMultiplyBy1e18 && (
           <div
-            className="space-x-4 flex tooltip tooltip-top tooltip-secondary before:content-[attr(data-tip)] before:right-[-10px] before:left-auto before:transform-none"
+            className="space-x-4 flex tooltip tooltip-top tooltip-primary before:content-[attr(data-tip)] before:right-[-10px] before:left-auto before:transform-none text-white"
             data-tip="Multiply by 10^18 (wei)"
           >
             <button

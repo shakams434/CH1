@@ -2,312 +2,152 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-html {
-  scroll-behavior: smooth;
+:root,
+[data-theme] {
+  background: oklch(var(--b2));
 }
 
 body {
   min-height: 100vh;
-  font-family: var(--font-aldrich) !important;
 }
 
-.font-digital {
-  font-family: var(--font-digital) !important;
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 0.5rem;
+  line-height: 1;
 }
 
-.font-vt323 {
-  font-family: var(--font-vt323) !important;
+p {
+  margin: 1rem 0;
 }
 
 .btn {
   @apply shadow-md;
 }
 
+html {
+  @apply overflow-y-scroll overflow-x-hidden;
+}
+
+body {
+  @apply overflow-y-auto overflow-x-hidden;
+}
+
+.modal {
+  @apply overflow-hidden;
+}
+
+.modal-box {
+  @apply min-h-[20rem] max-w-[25rem] overflow-hidden;
+  transform: translateZ(0);
+}
+
+.modal-backdrop,
+.modal.backdrop-blur {
+  @apply fixed inset-0 overflow-hidden;
+}
+
 .btn.btn-ghost {
   @apply shadow-none;
 }
 
-.bg-gradient-linear {
-  background: linear-gradient(
-    180deg,
-    rgba(159, 87, 131, 1) 0%,
-    rgba(69, 57, 114, 1) 100%
-  );
-}
-.bg-landing {
-  background-image: url("/home_header_clouds.png");
-  background-position: center top;
-  background-repeat: repeat-x;
-  background-size: auto 300px;
-}
-.footer-header-landing {
-  background-image: url("/footer-main-landing.png");
-  background-size: contain;
-  background-repeat: repeat-x;
-  width: 100%;
-  height: 130px;
-}
-.bg-banner-join {
-  background-image: url("/bgBanner_join.png");
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 100%;
-}
-
-.bg-ft-join {
-  background-image: url("/ft-join.png");
-  background-position: bottom;
-  background-size: contain;
-  background-repeat: repeat-x;
-  width: 100%;
-}
-
-.traslate-circule {
-  transform: translateX(calc(-50% - 2px));
-}
-
-/* start edit desc challenge's style */
-
-.challenge-content p,
-.challenge-content strong,
-.challenge-content h1,
-.challenge-content h2,
-.challenge-content h3,
-.challenge-content h4,
-.challenge-content ul {
-  color: #0c0c4f;
-  margin: 8px 0;
-}
-
-.challenge-content a,
-.challenge-content code,
-.challenge-content details {
-  font-size: 14px;
-  color: #0c0c4f;
-}
-
-.challenge-content details {
-  cursor: pointer;
-}
-
-.challenge-content h1 {
-  font-size: xx-large;
-}
-
-.challenge-content h2 {
-  font-size: x-large;
-}
-
-.challenge-content h3 {
-  font-size: large;
-}
-
-.challenge-content {
-  scrollbar-width: thin;
-  scrollbar-color: #4d58ff #ffffff;
-}
-
-.challenge-content::-webkit-scrollbar {
-  width: 6px;
-  background: #ffffff;
-}
-
-.challenge-content::-webkit-scrollbar-thumb {
-  background: #4d58ff;
-  border-radius: 3px;
-  position: relative;
-}
-
-.challenge-content::-webkit-scrollbar-thumb::before {
-  content: "";
+.circle-gradient {
+  border-radius: 630px;
+  background: #bd93f1;
+  filter: blur(229px);
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 25%,
-    white 25%,
-    white 35%,
-    transparent 35%,
-    transparent 45%,
-    white 45%,
-    white 55%,
-    transparent 55%,
-    transparent 65%,
-    white 65%,
-    white 75%,
-    transparent 75%
-  );
+  top: 0;
 }
 
-.challenge-content::-webkit-scrollbar-track {
-  background: #ffffff;
-}
-
-/* end edit desc challenge's style */
-
-.shadow-modal {
-  box-shadow:
-    7px 4px 0px 0px #000,
-    0px 0px 41.5px 0px rgba(0, 0, 0, 0.17);
-}
-
-.coming-container {
-  position: relative;
-}
-
-.coming-text {
-  font-size: 14px;
-  background-color: #2835ff;
-  border-radius: 4px;
-  padding: 0 4px;
-  cursor: not-allowed;
-}
-
-.coming-tooltip {
+.circle-gradient-blue {
+  border-radius: 630px;
+  background: #a6e8fe;
+  filter: blur(250px);
   position: absolute;
-  right: -360px;
-  top: 20%;
-  transform: translateY(-20%);
-  display: none;
-  z-index: 99;
+  top: 0;
+  right: 0;
 }
 
-.coming-text:hover + .coming-tooltip,
-.coming-tooltip:hover {
-  display: block;
+.border-gradient {
+  border: 1px solid #5c4fe5;
 }
 
-@media (max-width: 639px) {
-  .footer-header-landing {
-    background-size: auto 70px;
-    width: 100%;
-    height: 70px;
-  }
-  .bg-landing {
-    background-size: contain;
-  }
-  .bg-ft-join {
-    background-size: auto 102px;
-    display: flex;
-    font-size: 16px;
-    text-align: center;
-    padding: 0;
-  }
-}
-@media (min-width: 640px) and (max-width: 768px) {
-  .footer-header-landing {
-    background-size: auto 70px;
-    width: 100%;
-    height: 70px;
-  }
-  .bg-landing {
-    background-size: contain;
-  }
-  .bg-ft-join {
-    background-size: auto 102px;
-    display: flex;
-    font-size: 16px;
-    text-align: center;
-    padding: 0;
-  }
+.bg-modal {
+  backdrop-filter: blur(7.449999809265137px);
 }
 
-@media (min-width: 769px) and (max-width: 1023px) {
-  .footer-header-landing {
-    background-size: auto 84px;
-    width: 100%;
-    height: 90px;
+.custom::after {
+  position: absolute !important;
+  display: block !important;
+  height: 0.5rem !important;
+  width: 0.5rem !important;
+  top: 1rem !important;
+  right: 1.4rem !important;
+  transform: translateY(-100%) rotate(45deg) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  content: "" !important;
+  box-shadow: 2px 2px !important;
+  pointer-events: none !important;
+}
+
+@layer utilities {
+  .clip-corner {
+    clip-path: polygon(0 0, calc(100% - 1rem) 0, 100% 1rem, 100% 100%, 0 100%);
   }
-  .bg-landing {
-    background-size: contain;
-  }
-  .bg-ft-join {
-    display: flex;
-    font-size: 14px;
-    text-align: center;
-  }
-  .coming-tooltip {
-    right: -290px;
+
+  .clip-corner::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 1rem;
+    height: 1rem;
+    background: inherit;
+    border-top: 1px solid #8a45fc;
+    border-right: 1px solid #8a45fc;
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    z-index: 10;
   }
 }
 
-@media (max-width: 767px) {
-  .shadow-modal {
-    box-shadow: none;
+.circle-gradient-dark {
+  position: absolute;
+  top: 0;
+  left: 60px;
+  border-radius: 630px;
+  background: #7353d2;
+  filter: blur(229px);
+}
+
+.circle-gradient-blue-dark {
+  border-radius: 630px;
+  background: #0ea9ff;
+  filter: blur(250px);
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+@layer utilities {
+  .trapeze {
+    width: 84px;
+    height: 6px;
+    clip-path: polygon(10% 100%, 90% 100%, 100% 0, 0 0);
+    position: relative;
+    background-color: #5c4fe5;
+    position: absolute;
+    top: -1px;
   }
-  .section-modal-inside {
-    height: 100%;
-    width: 100vw;
-    overflow-y: scroll;
-  }
-  .challenge-content a,
-  .challenge-content code {
-    font-size: 12px;
-    color: #0c0c4f;
-  }
-}
-
-/* start roadmap mb */
-
-.roadmap-mb__background {
-  height: 100%;
-  background-color: #a8a8a8;
-}
-
-.roadmap-mb__progress {
-  height: 100%;
-  background-image: linear-gradient(
-    to bottom,
-    #2835ff var(--progress, 15%),
-    transparent 15%
-  );
-  transition: background-image 0.3s ease-out;
-}
-
-.roadmap-mb__dotted-line {
-  height: 100%;
-  width: 3px;
-  background-image: linear-gradient(to bottom, #d1d5db 50%, transparent 50%);
-  background-size: 1px 30px;
-}
-
-.roadmap-mb__progress {
-  animation: progress linear forwards;
-  animation-timeline: scroll();
-  will-change: background-image;
-}
-
-@property --progress {
-  syntax: "<percentage>";
-  initial-value: 0%;
-  inherits: false;
-}
-
-@keyframes progress {
-  0% {
-    --progress: 0%;
-  }
-  100% {
-    --progress: 100%;
+  .trapeze::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 84px;
+    height: 6px;
+    background: inherit;
+    clip-path: polygon(100% 100%, 100% 0, 90% 100%);
   }
 }
-
-@supports not (animation-timeline: scroll()) {
-  .roadmap-mb__progress {
-    animation: none;
-    transition: --progress 0.3s ease-out;
-  }
-}
-
-/* end roadmap mb */

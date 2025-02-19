@@ -1,15 +1,10 @@
-import { publicProvider, useAccount, useProvider } from "@starknet-react/core";
-import { WalletProvider } from "get-starknet-core";
+import { useAccount } from "~~/hooks/useAccount";
 import {
   AccountInterface,
   InvokeFunctionResponse,
   RpcProvider,
 } from "starknet";
-import {
-  getBlockExplorerTxLink,
-  // getParsedError,
-  notification,
-} from "~~/utils/scaffold-stark";
+import { getBlockExplorerTxLink, notification } from "~~/utils/scaffold-stark";
 import { useTargetNetwork } from "./useTargetNetwork";
 
 type TransactionFunc = (
@@ -53,13 +48,13 @@ export const useTransactor = (
   _walletClient?: AccountInterface,
 ): TransactionFunc => {
   let walletClient = _walletClient;
-  const { account } = useAccount();
+  const { account, address, status } = useAccount();
   const { targetNetwork } = useTargetNetwork();
   if (walletClient === undefined && account) {
     walletClient = account;
   }
 
-  const result: TransactionFunc = async (tx) => {
+  return async (tx) => {
     if (!walletClient) {
       notification.error("Cannot access account");
       console.error("⚡️ ~ file: useTransactor.tsx ~ error");
@@ -72,11 +67,6 @@ export const useTransactor = (
       | undefined = undefined;
     try {
       const networkId = await walletClient.getChainId();
-      // Get full transaction from public client
-      const publicClient = new RpcProvider({
-        nodeUrl: targetNetwork.rpcUrls.public.http[0],
-      });
-
       notificationId = notification.loading(
         <TxnNotification message="Awaiting for user confirmation" />,
       );
@@ -93,6 +83,7 @@ export const useTransactor = (
       } else {
         throw new Error("Incorrect transaction passed to transactor");
       }
+
       notification.remove(notificationId);
 
       const blockExplorerTxURL = networkId
@@ -121,14 +112,17 @@ export const useTransactor = (
       if (notificationId) {
         notification.remove(notificationId);
       }
-      console.error("⚡️ ~ file: useTransactor.ts ~ error", error);
-      const message = error.toString();
+
+      const errorPattern = /Contract (.*?)"}/;
+      const match = errorPattern.exec(error.message);
+      const message = match ? match[1] : error.message;
+
+      console.error("⚡️ ~ file: useTransactor.ts ~ error", message);
+
       notification.error(message);
       throw error;
     }
 
     return transactionHash;
   };
-
-  return result;
 };

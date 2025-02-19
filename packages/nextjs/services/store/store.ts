@@ -13,21 +13,21 @@ import { ChainWithAttributes } from "~~/utils/scaffold-stark";
 
 type GlobalState = {
   nativeCurrencyPrice: number;
+  strkCurrencyPrice: number;
   setNativeCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
+  setStrkCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
   targetNetwork: ChainWithAttributes;
   setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => void;
-  submissionTopic: string | undefined;
-  setSubmissionTopic: (topic: string | undefined) => void;
 };
 
 export const useGlobalState = create<GlobalState>((set) => ({
   nativeCurrencyPrice: 0,
+  strkCurrencyPrice: 0,
   setNativeCurrencyPrice: (newValue: number): void =>
     set(() => ({ nativeCurrencyPrice: newValue })),
+  setStrkCurrencyPrice: (newValue: number): void =>
+    set(() => ({ strkCurrencyPrice: newValue })),
   targetNetwork: scaffoldConfig.targetNetworks[0],
   setTargetNetwork: (newTargetNetwork: ChainWithAttributes) =>
     set(() => ({ targetNetwork: newTargetNetwork })),
-  submissionTopic: undefined,
-  setSubmissionTopic: (topic: string | undefined) =>
-    set(() => ({ submissionTopic: topic })),
 }));
